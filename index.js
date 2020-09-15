@@ -83,12 +83,14 @@ function install() {
         console.log("\nInstalling googletest...");
         spawnSync('sudo cp googletest/build/lib/libgtest.a /usr/lib/libgtest.a');
         spawnSync('sudo cp googletest/build/lib/libgtest_main.a /usr/lib/libgtest_main.a');
+        spawnSync('sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a');
+        spawnSync('sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a');
 
         spawnSync('sudo cp -R googletest/googletest/include/gtest /usr/include');
     } else if (process.platform === "darwin") {
         console.log("\nInstalling googletest...");
         spawnSync('sudo cp googletest/build/lib/libgtest.a /opt/local/lib/libgtest.a');
-        spawnSync('sudo cp googletest/build/lib/libgtest_main.a /opt/local/lib/libgtest_main.a');
+        spawnSync('sudo cp googletest/build/lib/libgtest_main.a /opt/local/lib/libgtest_main.a');.
 
         spawnSync('sudo cp -R googletest/googletest/include/gtest /opt/local/include');
     } else if (process.platform === "win32") {
