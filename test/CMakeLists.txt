@@ -22,7 +22,7 @@ endif ()
 add_executable(test test.cpp)
 
 if (WIN32)
-    target_link_libraries(${PROJECT_NAME} PRIVATE gtest_maind gtestd)
+    target_link_libraries(${PROJECT_NAME} PRIVATE gtest_main gtest)
 else ()
     target_link_libraries(${PROJECT_NAME} PRIVATE gtest pthread)
 endif ()
