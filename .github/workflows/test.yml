@@ -16,8 +16,7 @@ jobs:
       - name: Install googletest
         uses: MarkusJx/googletest-installer@v0.0.1
         id: install_gtest
-      - run: ls | grep gtest
-        working-directory: /usr/include
+      - run: sudo cp -R googletest/googletest/include/ /usr/include
       - name: echo library_dir
         if: matrix.os == 'windows-latest'
         run: "echo \"Library_dir: ${{ steps.install_gtest.outputs.library_dir }}\""
