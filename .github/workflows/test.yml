@@ -16,12 +16,6 @@ jobs:
       - name: Install googletest
         uses: ./
         id: install_gtest
-      - name: echo library_dir
-        if: matrix.os == 'windows-latest'
-        run: "echo \"Library_dir: ${{ steps.install_gtest.outputs.library_dir }}\""
-      - name: echo include_dir
-        if: matrix.os == 'windows-latest'
-        run: "echo \"Include_dir: ${{ steps.install_gtest.outputs.include_dir }}\""
       - name: configure test not windows
         if: matrix.os != 'windows-latest'
         run: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Werror" . -B build
@@ -31,7 +25,7 @@ jobs:
         run: cmake --build .
         working-directory: test/build
       - name: configure windows
-        run: cmake -DGTEST_LINK=steps.install_gtest.outputs.library_dir -DGTEST_INCLUDE=steps.install_gtest.outputs.include_dir . -B build
+        run: cmake . -B build
         if: matrix.os == 'windows-latest'
         working-directory: test
       - name: build windows
@@ -44,5 +38,5 @@ jobs:
         working-directory: test/build
       - name: run test windows
         if: matrix.os == 'windows-latest'
-        run: ./test.exe
+        run: test.exe
         working-directory: test/build
