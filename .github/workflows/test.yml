@@ -12,3 +12,4 @@ jobs:
       - name: Install googletest
         uses: ./
         id: install_gtest
+      - run: ls
