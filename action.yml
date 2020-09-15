@@ -11,6 +11,7 @@ runs:
   using: "composite"
   steps:
     - run: git clone https://github.com/google/googletest
+      shell: bash
     - run: cmake . -B build
       working-directory: googletest
       if: runner.os == 'Windows'
