@@ -22,3 +22,27 @@ jobs:
       - name: echo include_dir
         if: matrix.os == 'windows-latest'
         run: "echo \"Include_dir: ${{ steps.install_gtest.outputs.include_dir }}\""
+      - name: configure test not windows
+        if: matrix.os != 'windows-latest'
+        run: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Werror" . -B build
+        working-directory: test
+      - name: build test not windows
+        if: matrix.os != 'windows-latest'
+        run: cmake --build .
+        working-directory: test/build
+      - name: configure windows
+        run: cmake -DLINK_DIRECTORIES=steps.install_gtest.outputs.library_dir . -B build
+        if: matrix.os == 'windows-latest'
+        working-directory: test
+      - name: build windows
+        if: matrix.os == 'windows-latest'
+        run: cmake --build . --config Release
+        working-directory: test/build
+      - name: run test not windows
+        if: matrix.os != 'windows-latest'
+        run: ./test
+        working-directory: test/build
+      - name: run test windows
+        if: matrix.os == 'windows-latest'
+        run: ./test.exe
+        working-directory: test/build
