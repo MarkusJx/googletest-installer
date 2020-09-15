@@ -10,10 +10,11 @@ runs:
 #  main: 'index.js'
   using: "composite"
   steps:
-    - run: git clone https://github.com/google/googletest
+    - name: clone gtest
+      run: git clone https://github.com/google/googletest
       shell: bash
-      name: clone gtest
-    - run: |
+    - name: configure gtest
+      run: |
         if [ "$RUNNER_OS" == "Windows" ]; then
           cmake . -B build
         else
@@ -21,8 +22,8 @@ runs:
         fi
       working-directory: googletest
       shell: bash
-      name: configure gtest
-    - run: |
+    - name: build gtest
+      run: |
         if [ "$RUNNER_OS" == "Windows" ]; then
           cmake --build . --config Release
         else
@@ -30,9 +31,10 @@ runs:
         fi
       working-directory: googletest/build
       shell: bash
-    - run: |
+    - name: copy deps
+      run: |
         if [ "$RUNNER_OS" == "Linux" ]; then
-          sudo cp googletest/build/lib/*.a /usr/lib 
+          sudo cp googletest/build/lib/*.a /usr/lib
           sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a
           sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
           sudo cp -R googletest/googletest/include/gtest /usr/include
@@ -40,7 +42,8 @@ runs:
           echo "::set-output name=library_dir::${{env.working-directory}}/googletest/build/lib/Release"
           echo "::set-output name=include_dir::${{env.working-directory}}/googletest/googletest/include"
         else
-          sudo cp googletest/build/lib/*.a /opt/local/lib
+          sudo cp googletest/build/lib/libgtest.a /opt/local/lib/libgtest.a
+          sudo cp googletest/build/lib/libgtest_main.a /opt/local/lib/libgtest_main.a
           sudo cp -R googletest/googletest/include/gtest /opt/local/include
         fi
       shell: bash
