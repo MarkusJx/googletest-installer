@@ -7,8 +7,8 @@ if (WIN32)
     option(GTEST_INCLUDE "")
     option(GTEST_LINK "")
 
-    link_directories(GTEST_LINK)
-    include_directories(GTEST_INCLUDE)
+    link_directories("D:/gtest/lib")
+    include_directories("D:/gtest/include")
 
     set(CMAKE_CXX_FLAGS_RELEASE "/MT")
     set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
