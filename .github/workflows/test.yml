@@ -18,7 +18,7 @@ jobs:
         id: install_gtest
       - run: sudo apt-get install tree -y
       - run: tree googletest #&& sudo cp googletest/build/lib/libgtest.a /usr/lib && ls | grep gtest
-        working-directory: /usr/bin
+        # working-directory: /usr/bin
       - name: echo library_dir
         if: matrix.os == 'windows-latest'
         run: "echo \"Library_dir: ${{ steps.install_gtest.outputs.library_dir }}\""
