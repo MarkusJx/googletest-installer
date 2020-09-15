@@ -6,36 +6,43 @@ outputs:
   include_dir:
     description: 'The googletest include directory'
 runs:
-  using: 'node12'
-  main: 'index.js'
-#  using: "composite"
-#  steps:
-#    - run: git clone https://github.com/google/googletest
-#    - run: cmake . -B build
-#      working-directory: googletest
-#      if: runner.os == 'Windows'
-#    - run: sudo cmake -DCMAKE_BUILD_TYPE=Release . -B build
-#      working-directory: googletest
-#      if: runner.os != 'Windows'
-#    - run: cmake --build . --config Release
-#      working-directory: googletest/build
-#      if: runner.os == 'Windows'
-#    - run: cmake --build .
-#      working-directory: googletest/build
-#      if: runner.os != 'Windows'
-#    - run: |
-#        sudo cp googletest/build/lib/*.a /usr/lib 
-#        sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a
-#        sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
-#        sudo cp -R googletest/googletest/include/gtest /usr/include
-#      if: runner.os == 'Linux'
-#    - run: |
-#        sudo cp googletest/build/lib/*.a /opt/local/lib
-#        sudo cp -R googletest/googletest/include/gtest /opt/local/include
-#      if: runner.os == 'macOs'
-#    - run: |
-#        echo "::set-output name=library_dir::${{env.working-directory}}/googletest/build/lib/Release"
-#        echo "::set-output name=include_dir::${{env.working-directory}}/googletest/googletest/include"
+#  using: 'node12'
+#  main: 'index.js'
+  using: "composite"
+  steps:
+    - run: git clone https://github.com/google/googletest
+    - run: cmake . -B build
+      working-directory: googletest
+      if: runner.os == 'Windows'
+      shell: cmd
+    - run: sudo cmake -DCMAKE_BUILD_TYPE=Release . -B build
+      working-directory: googletest
+      if: runner.os != 'Windows'
+      shell: bash
+    - run: cmake --build . --config Release
+      working-directory: googletest/build
+      if: runner.os == 'Windows'
+      shell: cmd
+    - run: cmake --build .
+      working-directory: googletest/build
+      if: runner.os != 'Windows'
+      shell: bash
+    - run: |
+        sudo cp googletest/build/lib/*.a /usr/lib 
+        sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a
+        sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
+        sudo cp -R googletest/googletest/include/gtest /usr/include
+      if: runner.os == 'Linux'
+      shell: bash
+    - run: |
+        sudo cp googletest/build/lib/*.a /opt/local/lib
+        sudo cp -R googletest/googletest/include/gtest /opt/local/include
+      if: runner.os == 'macOs'
+      shell: bash
+    - run: |
+        echo "::set-output name=library_dir::${{env.working-directory}}/googletest/build/lib/Release"
+        echo "::set-output name=include_dir::${{env.working-directory}}/googletest/googletest/include"
+      shell: cmd
 branding:
   icon: activity
   color: gray-dark
