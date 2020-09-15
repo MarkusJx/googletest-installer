@@ -85,9 +85,12 @@ function install() {
         spawnSync('sudo cp googletest/build/lib/libgtest_main.a /usr/lib/libgtest_main.a');
 
         spawnSync('sudo cp -R googletest/googletest/include/ /usr/include');
-        //copyRecursiveSync("googletest/googletest/include", "/usr/include");
     } else if (process.platform === "darwin") {
         console.log("\nInstalling googletest...");
+        spawnSync('sudo cp googletest/build/lib/libgtest.a /opt/local/lib/libgtest.a');
+        spawnSync('sudo cp googletest/build/lib/libgtest_main.a /opt/local/lib/libgtest_main.a');
+
+        spawnSync('sudo cp -R googletest/googletest/include/ /opt/local/include');
     } else if (process.platform === "win32") {
         console.log("\nRunning on windows, not installing googletest, the library path will be set to library_dir, the include path will be set to include_dir");
         core.setOutput("library_dir", path.join(__dirname, "googletest/build/lib/Release"));
@@ -98,22 +101,6 @@ function install() {
 
     console.log("Done.");
 }
-
-// src: https://stackoverflow.com/a/22185855/14148409
-function copyRecursiveSync(src, dest) {
-    var exists = fs.existsSync(src);
-    var stats = exists && fs.statSync(src);
-    var isDirectory = exists && stats.isDirectory();
-    if (isDirectory) {
-        fs.mkdirSync(dest);
-        fs.readdirSync(src).forEach(function(childItemName) {
-            copyRecursiveSync(path.join(src, childItemName),
-                path.join(dest, childItemName));
-        });
-    } else {
-        fs.copyFileSync(src, dest);
-    }
-};
 
 try {
     clone();
