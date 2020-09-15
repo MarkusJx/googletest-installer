@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 20)
 if (WIN32)
     set(CMAKE_CXX_FLAGS_RELEASE "/MT")
     set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+else()
+    link_directories("/usr/lib")
 endif ()
 
 add_executable(test test.cpp)
