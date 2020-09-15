@@ -6,8 +6,6 @@ outputs:
   include_dir:
     description: 'The googletest include directory'
 runs:
-#  using: 'node12'
-#  main: 'index.js'
   using: "composite"
   steps:
     - name: clone gtest
@@ -44,12 +42,11 @@ runs:
           mkdir D:/gtest/include
           cp -R googletest/googletest/include/gtest D:/gtest/include
           cp googletest/build/lib/Release/gtest.lib D:/gtest/lib
-          cd googletest/build/lib/Release/gtest_main.lib D:/gtest/lib
+          cp googletest/build/lib/Release/gtest_main.lib D:/gtest/lib
         else
           sudo cp googletest/build/lib/libgtest.a /usr/local/lib/libgtest.a
           sudo cp googletest/build/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
           sudo cp -R googletest/googletest/include/gtest /usr/local/include
-          cd /usr/local/include && ls | grep gtest
         fi
       shell: bash
 branding:
