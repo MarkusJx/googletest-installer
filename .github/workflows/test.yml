@@ -36,8 +36,8 @@ jobs:
         if: matrix.os != 'windows-latest'
         run: ./test
         working-directory: test/build
-      - name: run test windows
-        if: matrix.os == 'windows-latest'
-        run: test.exe
-        working-directory: test/build
-        shell: cmd
+      #- name: run test windows
+      #  if: matrix.os == 'windows-latest'
+      #  run: test.exe
+      #  working-directory: test/build
+      #  shell: cmd
