@@ -6,7 +6,7 @@ Install gtest on gh actions
 action.yml:
 ```yml
 - name: Install googletest
-  uses: MarkusJx/googletest-installer@v0.0.1
+  uses: MarkusJx/googletest-installer@v1.0
   id: install_gtest
 # On windows, the path to the gtest libs will be set to steps.install_gtest.outputs.library_dir
 # On windows, the path to the gtest include directory
