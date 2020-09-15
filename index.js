@@ -84,13 +84,13 @@ function install() {
         spawnSync('sudo cp googletest/build/lib/libgtest.a /usr/lib/libgtest.a');
         spawnSync('sudo cp googletest/build/lib/libgtest_main.a /usr/lib/libgtest_main.a');
 
-        spawnSync('sudo cp -R googletest/googletest/include/ /usr/include');
+        spawnSync('sudo cp -R googletest/googletest/include/gtest /usr/include');
     } else if (process.platform === "darwin") {
         console.log("\nInstalling googletest...");
         spawnSync('sudo cp googletest/build/lib/libgtest.a /opt/local/lib/libgtest.a');
         spawnSync('sudo cp googletest/build/lib/libgtest_main.a /opt/local/lib/libgtest_main.a');
 
-        spawnSync('sudo cp -R googletest/googletest/include/ /opt/local/include');
+        spawnSync('sudo cp -R googletest/googletest/include/gtest /opt/local/include');
     } else if (process.platform === "win32") {
         console.log("\nRunning on windows, not installing googletest, the library path will be set to library_dir, the include path will be set to include_dir");
         core.setOutput("library_dir", path.join(__dirname, "googletest/build/lib/Release"));
