@@ -45,6 +45,7 @@ runs:
           sudo cp googletest/build/lib/libgtest.a /usr/local/lib/libgtest.a
           sudo cp googletest/build/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
           sudo cp -R googletest/googletest/include/gtest /usr/local/include
+          cd /usr/local/include && ls | grep gtest
         fi
       shell: bash
 branding:
