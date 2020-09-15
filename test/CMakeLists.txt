@@ -14,6 +14,11 @@ if (WIN32)
     set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
 endif ()
 
+if (APPLE)
+    link_directories("/usr/local/lib")
+    include_directories("/usr/local/include")
+endif ()
+
 add_executable(test test.cpp)
 
 if (WIN32)
