@@ -1,4 +1,4 @@
-name: 'Googletest builder'
+name: 'Googletest installer'
 description: 'Build and install googletest'
 outputs:
   library_dir:
