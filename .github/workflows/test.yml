@@ -12,4 +12,4 @@ jobs:
       - name: Install googletest
         uses: ./
         id: install_gtest
-      - run: ls
+      - run: sudo ldconfig -v | grep gtest
