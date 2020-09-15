@@ -39,8 +39,8 @@ runs:
           sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
           sudo cp -R googletest/googletest/include/gtest /usr/include
         elif [ "$RUNNER_OS" == "Windows" ]; then
-          echo "::set-output name=library_dir::${{env.working-directory}}/googletest/build/lib/Release"
-          echo "::set-output name=include_dir::${{env.working-directory}}/googletest/googletest/include"
+          echo "::set-output name=library_dir::$(echo \"${{env.working-directory}}/googletest/build/lib/Release\")"
+          echo "::set-output name=include_dir::$(echo \"${{env.working-directory}}/googletest/googletest/include\""
         else
           sudo cp googletest/build/lib/libgtest.a /usr/local/lib/libgtest.a
           sudo cp googletest/build/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
