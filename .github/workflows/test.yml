@@ -17,8 +17,8 @@ jobs:
         uses: MarkusJx/googletest-installer@v0.0.1
         id: install_gtest
       #- run: sudo apt-get install tree -y
-      #- run: tree googletest #&& sudo cp googletest/build/lib/libgtest.a /usr/lib
-      - run: ls | grep gtest
+      - run: sudo cp googletest/build/lib/libgtest.a /usr/lib
+      - run: ls | grep libgtest
         working-directory: /usr/lib
       - name: echo library_dir
         if: matrix.os == 'windows-latest'
