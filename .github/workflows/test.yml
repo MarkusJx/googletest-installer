@@ -16,5 +16,3 @@ jobs:
       - name: Install googletest
         uses: ./
         id: install_gtest
-      - run: sudo ldconfig -v | grep gtest
-        if: matrix.os != 'windows-latest'
