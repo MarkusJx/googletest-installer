@@ -81,8 +81,8 @@ function build() {
 function install() {
     if (process.platform === "linux") {
         console.log("\nInstalling googletest...");
-        spawnSync('sudo chmod -R 755 /usr/lib');
-        spawnSync('sudo chmod -R 755 /usr/include');
+        spawnSync('sudo chmod -R 777 /usr/lib');
+        spawnSync('sudo chmod -R 777 /usr/include');
 
         fs.copyFileSync("googletest/build/lib/libgtest.a", "/usr/lib/libgtest.a");
         fs.copyFileSync("googletest/build/lib/libgtest_main.a", "/usr/lib/libgtest_main.a");
