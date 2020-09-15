@@ -31,7 +31,7 @@ jobs:
         run: cmake --build .
         working-directory: test/build
       - name: configure windows
-        run: cmake -DLINK_DIRECTORIES=steps.install_gtest.outputs.library_dir . -B build
+        run: cmake -DGTEST_LINK=steps.install_gtest.outputs.library_dir -DGTEST_INCLUDE=steps.install_gtest.outputs.include_dir . -B build
         if: matrix.os == 'windows-latest'
         working-directory: test
       - name: build windows
