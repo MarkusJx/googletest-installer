@@ -12,32 +12,38 @@ runs:
   steps:
     - run: git clone https://github.com/google/googletest
       shell: bash
-    - run: cmake . -B build
+      name: clone gtest
+    - run: |
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          cmake . -B build
+        else
+          sudo cmake -DCMAKE_BUILD_TYPE=Release . -B build
+        fi
       working-directory: googletest
-      shell: cmd
-    - run: sudo cmake -DCMAKE_BUILD_TYPE=Release . -B build
-      working-directory: googletest
       shell: bash
-    - run: cmake --build . --config Release
+      name: configure gtest
+    - run: |
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          cmake --build . --config Release
+        else
+          cmake --build .
+        fi
       working-directory: googletest/build
-      shell: cmd
-    - run: cmake --build .
-      working-directory: googletest/build
       shell: bash
     - run: |
-        sudo cp googletest/build/lib/*.a /usr/lib 
-        sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a
-        sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
-        sudo cp -R googletest/googletest/include/gtest /usr/include
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          sudo cp googletest/build/lib/*.a /usr/lib 
+          sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a
+          sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
+          sudo cp -R googletest/googletest/include/gtest /usr/include
+        elif [ "$RUNNER_OS" == "Windows" ]; then
+          echo "::set-output name=library_dir::${{env.working-directory}}/googletest/build/lib/Release"
+          echo "::set-output name=include_dir::${{env.working-directory}}/googletest/googletest/include"
+        else
+          sudo cp googletest/build/lib/*.a /opt/local/lib
+          sudo cp -R googletest/googletest/include/gtest /opt/local/include
+        fi
       shell: bash
-    - run: |
-        sudo cp googletest/build/lib/*.a /opt/local/lib
-        sudo cp -R googletest/googletest/include/gtest /opt/local/include
-      shell: bash
-    - run: |
-        echo "::set-output name=library_dir::${{env.working-directory}}/googletest/build/lib/Release"
-        echo "::set-output name=include_dir::${{env.working-directory}}/googletest/googletest/include"
-      shell: cmd
 branding:
   icon: activity
   color: gray-dark
