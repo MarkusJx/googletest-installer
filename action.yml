@@ -49,6 +49,13 @@ runs:
           sudo cp -R googletest/googletest/include/gtest /usr/local/include
         fi
       shell: bash
+    - name: clean up
+      run: |
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          rm -R googletest
+        else
+          sudo rm -R googletest
+        fi
 branding:
   icon: activity
   color: gray-dark
