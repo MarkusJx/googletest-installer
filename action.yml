@@ -1,0 +1,10 @@
+name: 'Googletest builder'
+description: 'Build and install googletest'
+outputs:
+  library_dir:
+    description: 'The directory where the googletest libraries are located'
+  include_dir:
+    description: 'The googletest include directory'
+runs:
+  using: 'node12'
+  main: 'index.js'
