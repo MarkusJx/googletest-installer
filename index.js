@@ -80,7 +80,7 @@ function build() {
 
 function install() {
     if (process.platform === "linux") {
-        console.log("\nInstalling googletest...");
+        console.log("\nInstalling googletest on linux...");
         spawnSync('sudo cp googletest/build/lib/*.a /usr/lib');
 
         spawnSync('sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a');
