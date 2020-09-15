@@ -16,11 +16,6 @@ jobs:
       - name: Install googletest
         uses: MarkusJx/googletest-installer@v0.0.1
         id: install_gtest
-      #- run: sudo apt-get install tree -y
-      - run: sudo cp -R googletest/googletest/include/gtest /usr/include
-      - run: sudo cp googletest/build/lib/libgtest.a /usr/lib
-      - run: ls | grep gtest
-        working-directory: /usr/include
       - name: echo library_dir
         if: matrix.os == 'windows-latest'
         run: "echo \"Library_dir: ${{ steps.install_gtest.outputs.library_dir }}\""
@@ -29,7 +24,7 @@ jobs:
         run: "echo \"Include_dir: ${{ steps.install_gtest.outputs.include_dir }}\""
       - name: configure test not windows
         if: matrix.os != 'windows-latest'
-        run: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Werror" -DLINK_DIRECTORIES="/usr/lib" . -B build
+        run: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Werror" . -B build
         working-directory: test
       - name: build test not windows
         if: matrix.os != 'windows-latest'
