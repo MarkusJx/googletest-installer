@@ -5,7 +5,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      matrix:
+        os: [macOS-latest, ubuntu-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v2
@@ -13,3 +17,4 @@ jobs:
         uses: ./
         id: install_gtest
       - run: sudo ldconfig -v | grep gtest
+        if: matrix.os != 'windows-latest'
