@@ -3,6 +3,9 @@ project(test CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 
+message(STATUS "CC set to: $ENV{CC}")
+message(STATUS "CXX set to:$ENV{CXX}")
+
 if (WIN32)
     option(GTEST_INCLUDE "")
     option(GTEST_LINK "")
