@@ -25,10 +25,17 @@ jobs:
         with: # Set CC_path and CXX_path to gcc-10 and g++-10
           CC_path: /usr/local/bin/gcc-10
           CXX_path: /usr/local/bin/g++-10
-      - name: configure test not windows
-        if: matrix.os != 'windows-latest'
+      - name: configure test ubuntu
+        if: matrix.os == 'ubuntu-latest'
         run: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Werror" . -B build
         working-directory: test
+      - name: configure test macOs
+        if: matrix.os == 'macOs-latest'
+        run: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Werror" . -B build
+        working-directory: test
+        env:
+          CC: /usr/local/bin/gcc-10
+          CXX: /usr/local/bin/g++-10
       - name: build test not windows
         if: matrix.os != 'windows-latest'
         run: cmake --build .
