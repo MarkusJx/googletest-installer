@@ -1,10 +1,14 @@
 name: 'Googletest installer'
 description: 'Build and install googletest'
-outputs:
-  library_dir:
-    description: 'The directory where the googletest libraries are located'
-  include_dir:
-    description: 'The googletest include directory'
+inputs:
+  CC_path:
+    description: 'A path to the CC compiler'
+    required: false
+    default: ''
+  CXX_path:
+    description: 'A path to the CXX compiler'
+    required: false
+    default: ''
 runs:
   using: "composite"
   steps:
@@ -20,6 +24,9 @@ runs:
         fi
       working-directory: googletest
       shell: bash
+      env:
+        CC: ${{ inputs.CC_path }}
+        CXX: ${{ inputs.CXX_path }}
     - name: build gtest
       run: |
         if [ "$RUNNER_OS" == "Windows" ]; then
