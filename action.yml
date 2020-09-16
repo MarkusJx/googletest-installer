@@ -22,12 +22,14 @@ runs:
       run: |
         compiler = ""
         if [ ! -z "${{ inputs.CC_path }}" ]; then
-          compiler = "-DCMAKE_C_COMPILER=${{ inputs.CC_path }"
+          compiler = "-DCMAKE_C_COMPILER=${{ inputs.CC_path }}"
         fi
         
         if [ ! -z "${{ inputs.CXX_path }}" ]; then
           compiler = "${compiler} -DCMAKE_CXX_COMPILER=${{ inputs.CXX_path }}"
         fi
+        
+        echo "cmake compiler set to: ${compiler}"
         
         if [ "$RUNNER_OS" == "Windows" ]; then
           cmake ${compiler} . -B build
