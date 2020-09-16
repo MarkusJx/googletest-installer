@@ -13,9 +13,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Install googletest
+      - name: Install googletest not macOs
         uses: ./
-        id: install_gtest
+        if: matrix.os != 'macOs-latest'
+      - name: install gcc-10 on macOs
+        if: matrix.os == 'macOs-latest'
+        run: brew install gcc@10
+      - name: install googletest macOs
+        if: matrix.os == 'macOs-latest'
+        uses: ./
+        with: # Set CC_path and CXX_path to gcc-10 and g++-10
+          CC_path: /usr/local/bin/gcc-10
+          CXX_path: /usr/local/bin/g++-10
       - name: configure test not windows
         if: matrix.os != 'windows-latest'
         run: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Werror" . -B build
