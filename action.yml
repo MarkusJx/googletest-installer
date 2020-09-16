@@ -21,15 +21,12 @@ runs:
     - name: configure gtest
       run: |
         if [ "$RUNNER_OS" == "Windows" ]; then
-          cmake . -B build
+          cmake -DCMAKE_C_COMPILER=${{ inputs.CC_path }} -DCMAKE_CXX_COMPILER=${{ inputs.CXX_path }} . -B build
         else
-          sudo cmake -DCMAKE_BUILD_TYPE=Release . -B build
+          sudo cmake -DCMAKE_C_COMPILER=${{ inputs.CC_path }} -DCMAKE_CXX_COMPILER=${{ inputs.CXX_path }} -DCMAKE_BUILD_TYPE=Release . -B build
         fi
       working-directory: googletest
       shell: bash
-      env:
-        CC: inputs.CC_path
-        CXX: inputs.CXX_path
     - name: build gtest
       run: |
         if [ "$RUNNER_OS" == "Windows" ]; then
