@@ -20,7 +20,7 @@ runs:
       shell: bash
     - name: configure gtest
       run: |
-        compiler = ""
+        compiler=''
         if [ ! -z "${{ inputs.CC_path }}" ]; then
           compiler = "-DCMAKE_C_COMPILER=${{ inputs.CC_path }}"
         fi
