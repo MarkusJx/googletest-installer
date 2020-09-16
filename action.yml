@@ -15,6 +15,9 @@ runs:
     - name: clone gtest
       run: git clone https://github.com/google/googletest
       shell: bash
+    - name: echo CC and CXX
+      run: echo CC_path set to ${{ inputs.CC_path }} and CXX_path set to ${{ inputs.CXX_path }}
+      shell: bash
     - name: configure gtest
       run: |
         if [ "$RUNNER_OS" == "Windows" ]; then
