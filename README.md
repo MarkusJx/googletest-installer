@@ -5,11 +5,34 @@ Install gtest on gh actions
 ## Usage
 action.yml:
 ```yml
-- name: Install googletest
+- name: Install gtest
   uses: MarkusJx/googletest-installer@v1.0
-  id: install_gtest
-# On windows, the path to the gtest libs will be set to steps.install_gtest.outputs.library_dir
-# On windows, the path to the gtest include directory
-# will be set to steps.install_gtest.outputs.include_dir
-# On any other os, the libraries and include files will be "installed"
+```
+
+#### On linux
+* The libraries will be located in ``/usr/lib``
+* The headers to include will be located in ``/usr/include``
+
+#### On windows
+* The libraries will be located in ``D:/gtest/lib``
+* The headers to include will be located in ``D:/gtest/include``
+
+#### On macOs
+* The libraries will be located in ``/usr/local/lib``
+* The headers to include will be located in ``/usr/local/include``
+
+To set the correct paths, you could add to your ``CMakeLists.txt``:
+```Cmake
+if (DEFINED ENV{GITHUB_ACTIONS})
+  if (WIN32)
+    link_directories("D:/gtest/lib")
+    include_directories("D:/gtest/include")
+
+    set(CMAKE_CXX_FLAGS_RELEASE "/MT")
+    set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+  elseif (APPLE)
+    link_directories("/usr/local/lib")
+    include_directories("/usr/local/include")
+  endif ()
+endif ()
 ```
