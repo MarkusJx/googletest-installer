@@ -20,10 +20,19 @@ runs:
       shell: bash
     - name: configure gtest
       run: |
+        compiler = ""
+        if [ ! -z "${{ inputs.CC_path }}" ]; then
+          compiler = "-DCMAKE_C_COMPILER=${{ inputs.CC_path }"
+        fi
+        
+        if [ ! -z "${{ inputs.CXX_path }}" ]; then
+          compiler = "${compiler} -DCMAKE_CXX_COMPILER=${{ inputs.CXX_path }}"
+        fi
+        
         if [ "$RUNNER_OS" == "Windows" ]; then
-          cmake -DCMAKE_C_COMPILER=${{ inputs.CC_path }} -DCMAKE_CXX_COMPILER=${{ inputs.CXX_path }} . -B build
+          cmake ${compiler} . -B build
         else
-          sudo cmake -DCMAKE_C_COMPILER=${{ inputs.CC_path }} -DCMAKE_CXX_COMPILER=${{ inputs.CXX_path }} -DCMAKE_BUILD_TYPE=Release . -B build
+          sudo cmake ${compiler} -DCMAKE_BUILD_TYPE=Release . -B build
         fi
       working-directory: googletest
       shell: bash
