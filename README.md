@@ -6,7 +6,7 @@ Install gtest on gh actions
 action.yml:
 ```yml
 - name: Install gtest
-  uses: MarkusJx/googletest-installer@v1.0
+  uses: MarkusJx/googletest-installer@v1.1
 ```
 
 #### On linux
