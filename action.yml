@@ -69,18 +69,30 @@ runs:
           sudo cp googletest/build/lib/*.a /usr/lib
           sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a
           sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
+          sudo ln -s /usr/lib/libgmock.a /usr/local/lib/libgmock.a
+          sudo ln -s /usr/lib/libgmock_main.a /usr/local/lib/libgmock_main.a
           sudo cp -R googletest/googletest/include/gtest /usr/include
+          sudo cp -R googletest/googlemock/include/gmock /usr/include
         elif [ "$RUNNER_OS" == "Windows" ]; then
           mkdir D:/gtest
           mkdir D:/gtest/lib
           mkdir D:/gtest/include
+          mkdir D:/gmock
+          mkdir D:/gmock/lib
+          mkdir D:/gmock/include
           cp -R googletest/googletest/include/gtest D:/gtest/include
+          cp -R googletest/googlemock/include/gmock D:/gmock/include
           cp googletest/build/lib/Release/gtest.lib D:/gtest/lib
           cp googletest/build/lib/Release/gtest_main.lib D:/gtest/lib
+          cp googletest/build/lib/Release/gmock.lib D:/gmock/lib
+          cp googletest/build/lib/Release/gmock_main.lib D:/gmock/lib
         else
           sudo cp googletest/build/lib/libgtest.a /usr/local/lib/libgtest.a
           sudo cp googletest/build/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
+          sudo cp googletest/build/lib/libgmock.a /usr/local/lib/libgmock.a
+          sudo cp googletest/build/lib/libgmock_main.a /usr/local/lib/libgmock_main.a
           sudo cp -R googletest/googletest/include/gtest /usr/local/include
+          sudo cp -R googletest/googlemock/include/gmock /usr/local/include
         fi
       shell: bash
     - name: clean up
