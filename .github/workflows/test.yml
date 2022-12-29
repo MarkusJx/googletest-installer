@@ -26,8 +26,7 @@ jobs:
         uses: ./
         if: matrix.compiler == 'mingw'
         with:
-          CC_PATH: 'C:/ProgramData/chocolatey/bin/gcc.exe'
-          CXX_PATH: 'C:/ProgramData/chocolatey/bin/g++.exe'
+          GENERATOR: 'MinGW Makefiles'
       - name: install gcc-10 on macOs
         if: matrix.os == 'macOs-latest'
         run: brew install gcc@10
