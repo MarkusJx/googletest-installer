@@ -17,6 +17,10 @@ inputs:
     description: 'C++ flags to pass to the C++ compiler'
     required: false
     default: ''
+  GENERATOR:
+    description: 'The generator to use for code generation'
+    required: false
+    default: ''
 runs:
   using: "composite"
   steps:
@@ -46,11 +50,18 @@ runs:
         fi
 
         echo "cmake compiler set to: ${compiler}"
+        
+        generator=''
+        if [ ! -z "${{ inputs.GENERATOR }}" ]; then
+          generator="-G ${{ inputs.GENERATOR }}"
+        fi
+        
+        echo "generator set to: ${generator}"
 
         if [ "$RUNNER_OS" == "Windows" ]; then
-          cmake ${compiler} . -B build
+          cmake ${compiler} -DCMAKE_BUILD_TYPE=Release ${generator} . -B build
         else
-          sudo cmake ${compiler} -DCMAKE_BUILD_TYPE=Release . -B build
+          sudo cmake ${compiler} -DCMAKE_BUILD_TYPE=Release ${generator} . -B build
         fi
       working-directory: googletest
       shell: bash
