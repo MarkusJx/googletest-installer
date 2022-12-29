@@ -53,7 +53,7 @@ runs:
         
         generator=''
         if [ ! -z "${{ inputs.GENERATOR }}" ]; then
-          generator="-G ${{ inputs.GENERATOR }}"
+          generator="-G \"${{ inputs.GENERATOR }}\""
         fi
         
         echo "generator set to: ${generator}"
