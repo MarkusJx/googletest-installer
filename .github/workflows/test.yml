@@ -9,13 +9,25 @@ jobs:
     
     strategy:
       matrix:
-        os: [macOS-latest, ubuntu-latest, windows-latest]
+        include:
+          - os: macOS-latest
+          - os: ubuntu-latest
+          - os: windows-latest
+            compiler: msvc
+          - os: windows-latest
+            compiler: mingw
 
     steps:
       - uses: actions/checkout@v2
       - name: Install googletest not macOs
         uses: ./
-        if: matrix.os != 'macOs-latest'
+        if: matrix.os != 'macOs-latest' && matrix.compiler != 'mingw'
+      - name: Install googletest mingw
+        uses: ./
+        if: matrix.compiler == 'mingw'
+        with:
+          CC_PATH: 'C:/ProgramData/chocolatey/bin/gcc.exe'
+          CXX_PATH: 'C:/ProgramData/chocolatey/bin/g++.exe'
       - name: install gcc-10 on macOs
         if: matrix.os == 'macOs-latest'
         run: brew install gcc@10
@@ -25,6 +37,7 @@ jobs:
         with: # Set CC_path and CXX_path to gcc-10 and g++-10
           CC_path: /usr/local/bin/gcc-10
           CXX_path: /usr/local/bin/g++-10
+
       - name: configure test ubuntu
         if: matrix.os == 'ubuntu-latest'
         run: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Werror" . -B build
@@ -40,9 +53,13 @@ jobs:
         if: matrix.os != 'windows-latest'
         run: cmake --build .
         working-directory: test/build
-      - name: configure windows
+      - name: configure windows msvc
         run: cmake . -B build
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-latest' && matrix.compiler == 'msvc'
+        working-directory: test
+      - name: configure windows mingw
+        run: cmake . -B build -DCC_PATH="C:/ProgramData/chocolatey/bin/gcc.exe" -DCXX_PATH="C:/ProgramData/chocolatey/bin/g++.exe"
+        if: matrix.os == 'windows-latest' && matrix.compiler == 'mingw'
         working-directory: test
       - name: build windows
         if: matrix.os == 'windows-latest'
