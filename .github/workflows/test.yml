@@ -58,7 +58,7 @@ jobs:
         if: matrix.os == 'windows-latest' && matrix.compiler == 'msvc'
         working-directory: test
       - name: configure windows mingw
-        run: cmake . -B build -DCC_PATH="C:/ProgramData/chocolatey/bin/gcc.exe" -DCXX_PATH="C:/ProgramData/chocolatey/bin/g++.exe"
+        run: cmake -G "MinGW Makefiles" . -B build
         if: matrix.os == 'windows-latest' && matrix.compiler == 'mingw'
         working-directory: test
       - name: build windows
