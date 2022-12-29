@@ -50,18 +50,16 @@ runs:
         fi
 
         echo "cmake compiler set to: ${compiler}"
-        
-        generator=''
+
         if [ ! -z "${{ inputs.GENERATOR }}" ]; then
-          generator="-G \"${{ inputs.GENERATOR }}\""
+          export CMAKE_GENERATOR="${{ inputs.GENERATOR }}"
+          echo "generator set to: ${{ inputs.GENERATOR }}"
         fi
-        
-        echo "generator set to: ${generator}"
 
         if [ "$RUNNER_OS" == "Windows" ]; then
-          cmake ${compiler} -DCMAKE_BUILD_TYPE=Release ${generator} . -B build
+          cmake ${compiler} -DCMAKE_BUILD_TYPE=Release . -B build
         else
-          sudo cmake ${compiler} -DCMAKE_BUILD_TYPE=Release ${generator} . -B build
+          sudo cmake ${compiler} -DCMAKE_BUILD_TYPE=Release . -B build
         fi
       working-directory: googletest
       shell: bash
