@@ -38,11 +38,11 @@ runs:
         fi
 
         if [ ! -z "${{ inputs.C_FLAGS }}" ]; then
-          compiler="${compiler} -DCMAKE_C_FLAGS=${{ inputs.C_FLAGS }}"
+          export CMAKE_CXX_FLAGS=${{ inputs.C_FLAGS }}
         fi
 
         if [ ! -z "${{ inputs.CXX_FLAGS }}" ]; then
-          compiler="${compiler} -DCMAKE_CXX_FLAGS=${{ inputs.CXX_FLAGS }}"
+          export CMAKE_CXX_FLAGS=${{ inputs.CXX_FLAGS }}
         fi
 
         echo "cmake compiler set to: ${compiler}"
